@@ -1,23 +1,23 @@
 ﻿; (function () {
     log('starting...')
 
-    var blzorSwupScriptTag = document.currentScript;
+    var bitBlazorSwupScriptTag = document.currentScript;
     
-    var debugAttribute = blzorSwupScriptTag.attributes['debug'];
+    var debugAttribute = bitBlazorSwupScriptTag.attributes['debug'];
     var debug = debugAttribute && debugAttribute.value && debugAttribute.value.toLowerCase() === 'true';
 
-    var swAttribute = blzorSwupScriptTag.attributes['sw'];
+    var swAttribute = bitBlazorSwupScriptTag.attributes['sw'];
     var sw = (swAttribute && swAttribute.value) || 'service-worker.js';
 
-    var progressHandlerName = 'blazorSwup';
-    var progressHandlerAttribute = blzorSwupScriptTag.attributes['handler'];
+    var swupHandlerName = 'bitBlazorSwup';
+    var progressHandlerAttribute = bitBlazorSwupScriptTag.attributes['handler'];
     if (progressHandlerAttribute && progressHandlerAttribute.value) {
-        progressHandlerName = progressHandlerAttribute.value;
+        swupHandlerName = progressHandlerAttribute.value;
     }
-    var progressHandler = window[progressHandlerName];
-    if (!progressHandler || typeof progressHandler !== 'function') {
-        warn(`progress handler (window.${progressHandlerName}) is not a function!`);
-        progressHandler = undefined;
+    var swupHandler = window[swupHandlerName];
+    if (!swupHandler || typeof swupHandler !== 'function') {
+        warn(`progress handler (window.${swupHandlerName}) is not a function!`);
+        swupHandler = undefined;
     }
 
     if (!('serviceWorker' in navigator)) {
@@ -26,11 +26,12 @@
     }
 
     navigator.serviceWorker.register(sw).then(prepareRegistration);
-    navigator.serviceWorker.addEventListener('message', handleMessage);
+    navigator.serviceWorker.addEventListener('message', handleSwMessage);
     navigator.serviceWorker.addEventListener('controllerchange', handleController);
 
+    var reloadPage;
     function prepareRegistration(reg) {
-        window.reloadPage = function () {
+        reloadPage = function () {
             if (navigator.serviceWorker.controller) {
                 reg.waiting && reg.waiting.postMessage('SKIP_WAITING');
             } else {
@@ -42,7 +43,7 @@
             if (reg.installing) {
                 handle('installing', {});
             } else {
-                handle('installed', { reload: () => window.reloadPage() });
+                handle('installed', { reload: () => reloadPage() });
             }
         }
 
@@ -69,7 +70,7 @@
     }
 
 
-    function handleMessage(e) {
+    function handleSwMessage(e) {
         const message = JSON.parse(e.data);
         const type = message.type;
         const data = message.data;
@@ -83,7 +84,7 @@
         }
 
         if (type === 'installed') {
-            handle('installed', { ...data, reload: () => window.reloadPage() });
+            handle('installed', { ...data, reload: () => reloadPage() });
         }
 
         if (type === 'activate') {
@@ -105,7 +106,7 @@
     }
 
     function handle() {
-        progressHandler && progressHandler(...arguments);
+        swupHandler && swupHandler(...arguments);
     }
 
     function log() {

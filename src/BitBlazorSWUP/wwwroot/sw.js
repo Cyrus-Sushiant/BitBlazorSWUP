@@ -54,7 +54,7 @@ function handleMessage(e) {
 
 async function createNewCache() {
     const offlineAssetsInclude = [/\.dll$/, /\.pdb$/, /\.wasm/, /\.html/, /\.js$/, /\.json$/, /\.css$/, /\.woff$/, /\.png$/, /\.jpe?g$/, /\.gif$/, /\.ico$/, /\.blat$/, /\.dat$/];
-    const offlineAssetsExclude = [/^_content\/BlazorSWUP\/sw.js$/, /^service-worker\.js$/];
+    const offlineAssetsExclude = [/^_content\/BitBlazorSWUP\/sw.js$/, /^service-worker\.js$/, /\.scp\.css$/];
 
     const assets = self.assetsManifest.assets
         .filter(asset => offlineAssetsInclude.some(pattern => pattern.test(asset.url)))
