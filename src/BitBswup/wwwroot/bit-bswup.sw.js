@@ -1,8 +1,7 @@
-﻿
-self.importScripts('./service-worker-assets.js');
+﻿self.importScripts('/service-worker-assets.js');
 
 const VERSION = self.assetsManifest.version;
-const CACHE_NAME_PREFIX = 'blazor-swup-';
+const CACHE_NAME_PREFIX = 'bit-blazor-swup-';
 const CACHE_NAME = `${CACHE_NAME_PREFIX}${VERSION}`;
 
 self.addEventListener('install', e => e.waitUntil(handleInstall(e)));
@@ -35,7 +34,7 @@ async function handleFetch(e) {
     // If you need some URLs to be server-rendered, edit the following check to exclude those URLs
     const shouldServeIndexHtml = e.request.mode === 'navigate';
     const requestUrl = shouldServeIndexHtml ? 'index.html' : e.request.url;
-    const asset = self.assetsManifest.assets.find(a => shouldServeIndexHtml? a.url === requestUrl: new URL(requestUrl).pathname.endsWith(a.url));
+    const asset = self.assetsManifest.assets.find(a => shouldServeIndexHtml ? a.url === requestUrl : new URL(requestUrl).pathname.endsWith(a.url));
     const cacheUrl = asset && `${asset.url}.${asset.hash}`;
 
     const cache = await caches.open(CACHE_NAME);
@@ -54,7 +53,7 @@ function handleMessage(e) {
 
 async function createNewCache() {
     const offlineAssetsInclude = [/\.dll$/, /\.pdb$/, /\.wasm/, /\.html/, /\.js$/, /\.json$/, /\.css$/, /\.woff$/, /\.png$/, /\.jpe?g$/, /\.gif$/, /\.ico$/, /\.blat$/, /\.dat$/];
-    const offlineAssetsExclude = [/^_content\/BitBlazorSWUP\/sw.js$/, /^service-worker\.js$/, /\.scp\.css$/];
+    const offlineAssetsExclude = [/^_content\/BitBswup\/bit-bswaup.sw.js$/, /^service-worker\.js$/, /\.scp\.css$/];
 
     const assets = self.assetsManifest.assets
         .filter(asset => offlineAssetsInclude.some(pattern => pattern.test(asset.url)))
@@ -90,7 +89,7 @@ async function createNewCache() {
                     const response = await fetch(request);
                     if (!response.ok) throw new TypeError('Bad response status');
                     await cache.put(cacheUrl, response);
-                    var percent = (++current) / total * 100;
+                    const percent = (++current) / total * 100;
                     postMessage({ type: 'progress', data: { asset, percent, index: current } });
                     resolve();
                 } catch (err) {
@@ -116,5 +115,5 @@ function postMessage(message) {
 }
 
 function log(value) {
-    console.log('BlazorSWUP:sw:', value);
+    //console.info('BitBSWUP:sw:', value);
 }

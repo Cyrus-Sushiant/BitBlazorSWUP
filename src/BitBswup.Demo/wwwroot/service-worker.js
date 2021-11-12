@@ -3,4 +3,4 @@
 // be reflected on the first load after each change).
 //self.addEventListener('fetch', () => { });
 
-self.importScripts('_content/BitBlazorSWUP/sw.js');
+self.importScripts('_content/BitBswup/bit-bswup.sw.js');

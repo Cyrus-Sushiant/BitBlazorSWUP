@@ -1,4 +1,4 @@
-self.importScripts('_content/BitBlazorSWUP/sw.js');
+self.importScripts('_content/BitBswup/bit-bswup.sw.js');
 
 ////// Caution! Be sure you understand the caveats before publishing an application with
 ////// offline support. See https://aka.ms/blazor-offline-considerations
