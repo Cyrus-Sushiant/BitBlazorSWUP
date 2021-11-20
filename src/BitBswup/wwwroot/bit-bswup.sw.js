@@ -52,12 +52,14 @@ function handleMessage(e) {
 // ============================================================================
 
 async function createNewCache() {
-    const offlineAssetsInclude = [/\.dll$/, /\.pdb$/, /\.wasm/, /\.html/, /\.js$/, /\.json$/, /\.css$/, /\.woff$/, /\.png$/, /\.jpe?g$/, /\.gif$/, /\.ico$/, /\.blat$/, /\.dat$/];
-    const offlineAssetsExclude = [/^_content\/BitBswup\/bit-bswaup.sw.js$/, /^service-worker\.js$/, /\.scp\.css$/];
+    const assetsInclude = [/\.dll$/, /\.pdb$/, /\.wasm/, /\.html/, /\.js$/, /\.json$/, /\.css$/, /\.woff$/, /\.png$/, /\.jpe?g$/, /\.gif$/, /\.ico$/, /\.blat$/, /\.dat$/]
+        .concat(self.assetsInclude || []);
+    const assetsExclude = [/^_content\/BitBswup\/bit-bswaup.sw.js$/, /^service-worker\.js$/]
+        .concat(self.assetsExclude || []);
 
     const assets = self.assetsManifest.assets
-        .filter(asset => offlineAssetsInclude.some(pattern => pattern.test(asset.url)))
-        .filter(asset => !offlineAssetsExclude.some(pattern => pattern.test(asset.url)));
+        .filter(asset => assetsInclude.some(pattern => pattern.test(asset.url)))
+        .filter(asset => !assetsExclude.some(pattern => pattern.test(asset.url)));
 
     let current = 0;
     const total = assets.length;
