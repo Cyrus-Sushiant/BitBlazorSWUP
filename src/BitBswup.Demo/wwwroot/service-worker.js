@@ -3,7 +3,8 @@
 // be reflected on the first load after each change).
 //self.addEventListener('fetch', () => { });
 
-self.assestsInclude = [];
+self.assetsInclude = [];
 self.assetsExclude = [/\.scp\.css$/];
+self.defaultUrl = "/";
 
 self.importScripts('_content/BitBswup/bit-bswup.sw.js');

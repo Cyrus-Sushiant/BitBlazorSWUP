@@ -33,7 +33,7 @@ async function handleFetch(e) {
     // For all navigation requests, try to serve index.html from cache
     // If you need some URLs to be server-rendered, edit the following check to exclude those URLs
     const shouldServeIndexHtml = e.request.mode === 'navigate';
-    const requestUrl = shouldServeIndexHtml ? 'index.html' : e.request.url;
+    const requestUrl = shouldServeIndexHtml ? (self.defaultUrl || 'index.html') : e.request.url;
     const asset = self.assetsManifest.assets.find(a => shouldServeIndexHtml ? a.url === requestUrl : new URL(requestUrl).pathname.endsWith(a.url));
     const cacheUrl = asset && `${asset.url}.${asset.hash}`;
 
