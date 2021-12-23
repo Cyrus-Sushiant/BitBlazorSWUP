@@ -96,7 +96,7 @@
         const options = window[optionsName] || {};
 
         const logAttribute = bitBswupScript.attributes['log'];
-        options.log = (logAttribute && (logAttribute.value || 'info')) || options.log;
+        options.log = (logAttribute && logAttribute.value) || options.log || 'info';
 
         const swAttribute = bitBswupScript.attributes['sw'];
         options.sw = (swAttribute && swAttribute.value) || options.sw || 'service-worker.js';
