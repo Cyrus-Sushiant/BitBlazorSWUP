@@ -5,6 +5,6 @@
 
 self.assetsInclude = [];
 self.assetsExclude = [/\.scp\.css$/];
-self.defaultUrl = "/";
+self.defaultUrl = "index.html";
 
 self.importScripts('_content/BitBswup/bit-bswup.sw.js');
