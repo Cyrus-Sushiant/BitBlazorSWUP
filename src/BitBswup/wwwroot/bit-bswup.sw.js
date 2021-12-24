@@ -1,7 +1,7 @@
 ﻿self.importScripts('/service-worker-assets.js');
 
 const VERSION = self.assetsManifest.version;
-const CACHE_NAME_PREFIX = 'bit-blazor-swup-';
+const CACHE_NAME_PREFIX = 'bit-bswup-';
 const CACHE_NAME = `${CACHE_NAME_PREFIX}${VERSION}`;
 
 self.addEventListener('install', e => e.waitUntil(handleInstall(e)));
