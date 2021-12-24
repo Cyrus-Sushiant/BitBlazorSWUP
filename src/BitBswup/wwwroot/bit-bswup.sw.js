@@ -80,7 +80,7 @@ async function createNewCache() {
         if (oldCache) {
             const oldResponse = await oldCache.match(cacheUrl);
             if (oldResponse) {
-                cache.put(cacheUrl, oldResponse);
+                await cache.put(cacheUrl, oldResponse);
                 current++;
                 return Promise.resolve();
             }
