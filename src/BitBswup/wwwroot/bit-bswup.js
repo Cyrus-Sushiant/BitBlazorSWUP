@@ -1,12 +1,13 @@
 ﻿; (function () {
+
+    const options = extract();
+
     if (!('serviceWorker' in navigator)) {
         warn('no serviceWorker in navigator');
         return;
     }
 
     info('starting...')
-
-    const options = extract();
 
     startBlazor();
 
